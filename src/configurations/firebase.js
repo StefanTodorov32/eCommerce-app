@@ -2,13 +2,13 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth"
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBx9be3vYsJpb3I3CfspK9k8RMS2ve-RY8",
-    authDomain: "ecommerce-befc2.firebaseapp.com",
-    projectId: "ecommerce-befc2",
-    storageBucket: "ecommerce-befc2.appspot.com",
-    messagingSenderId: "484411170310",
-    appId: "1:484411170310:web:90fff09f3ca097a0d5ad87",
-    measurementId: "G-JJQ5214ZMW"
+    apiKey: import.meta.env.VITE_API_KEY,
+    authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_APP_ID,
+    measurementId: import.meta.env.VITE_MEASUREMENT_ID
 };
 
 const app = initializeApp(firebaseConfig);
