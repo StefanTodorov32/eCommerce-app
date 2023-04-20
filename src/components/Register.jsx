@@ -20,11 +20,11 @@ export const Register = () => {
                         password: "",
                     }}
                     onSubmit={async (values) => {
-                        await authApi.register(values)
+                        const data = await authApi.register(values)
+                        console.log(data)
                     }}
                 >
                     {({ handleSubmit, errors, touched }) => {
-                        console.log(errors)
                         return (
                             <form onSubmit={handleSubmit}>
                                 <VStack spacing={4} align="flex-start">
@@ -69,7 +69,7 @@ export const Register = () => {
                                         <FormErrorMessage>{errors.password}</FormErrorMessage>
                                     </FormControl>
                                     <Button type="submit" colorScheme="purple" width="full">
-                                        Login
+                                        Register
                                     </Button>
                                 </VStack>
                             </form>

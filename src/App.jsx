@@ -4,12 +4,21 @@ import Navbar from './components/Navbar'
 import { Login } from './components/Login'
 import { ChakraProvider } from '@chakra-ui/react'
 import { Register } from './components/Register'
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+
+const queryClient = new QueryClient()
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <>
       <Navbar />
-      <Outlet />
+      <QueryClientProvider client={queryClient}>
+        <Outlet />
+      </QueryClientProvider>
     </>,
     children: [
       {
@@ -18,7 +27,7 @@ const router = createBrowserRouter([
       },
       {
         path: "register",
-        element: <Register/>
+        element: <Register />
       },
     ]
 
