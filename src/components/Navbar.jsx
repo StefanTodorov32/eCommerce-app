@@ -17,6 +17,8 @@ import {
 } from '@chakra-ui/react';
 import { Link as DomLink } from 'react-router-dom';
 import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons';
+import { useContext } from 'react';
+import { AuthContext } from '../store/AuthProvider';
 
 const Links = ['Dashboard', 'Projects', 'Team'];
 
@@ -37,7 +39,8 @@ const NavLink = ({ children }) => (
 
 export default function withAction() {
     const { isOpen, onOpen, onClose } = useDisclosure();
-
+    const { user, signOutUser } = useContext(AuthContext)
+    console.log(user)
     return (
         <>
             <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
@@ -61,43 +64,8 @@ export default function withAction() {
                         </HStack>
                     </HStack>
                     <Flex alignItems={'center'}>
-                        <Link
-                            paddingInline={4}
-                            paddingBlock={1}
-                            rounded={25}
-                            bg={'teal.400'}
-                            mr={4}
-                            color={'white'}
-                            fontWeight={600}
-                            fontSize={'md'}
-                            href='/login'
-                            _hover={{
-                                textDecoration: "none",
-                                bg: "teal.500"
-                            }}
-                            as={DomLink}
-                            to="/login"
-                        >
-                            Login
-                        </Link>
-                        <Link
-                            paddingInline={4}
-                            paddingBlock={1}
-                            rounded={25}
-                            bg={'teal.400'}
-                            mr={4}
-                            color={'white'}
-                            fontWeight={600}
-                            fontSize={'md'}
-                            _hover={{
-                                textDecoration: "none",
-                                bg: "teal.500"
-                            }}
-                            as={DomLink}
-                            to="/register"
-                        >
-                            Register
-                        </Link>
+
+
                         <Menu>
                             <MenuButton
                                 as={Button}
@@ -117,6 +85,63 @@ export default function withAction() {
                                 <MenuItem>Sign Out</MenuItem>
                             </MenuList>
                         </Menu>
+                        <>
+                            <Link
+                                paddingInline={4}
+                                paddingBlock={1}
+                                rounded={25}
+                                bg={'teal.400'}
+                                mr={4}
+                                color={'white'}
+                                fontWeight={600}
+                                fontSize={'md'}
+                                href='/login'
+                                _hover={{
+                                    textDecoration: "none",
+                                    bg: "teal.500"
+                                }}
+                                as={DomLink}
+                                to="/login"
+                            >
+                                Login
+                            </Link>
+                            <Link
+                                paddingInline={4}
+                                paddingBlock={1}
+                                rounded={25}
+                                bg={'teal.400'}
+                                mr={4}
+                                color={'white'}
+                                fontWeight={600}
+                                fontSize={'md'}
+                                _hover={{
+                                    textDecoration: "none",
+                                    bg: "teal.500"
+                                }}
+                                as={DomLink}
+                                to="/register"
+                            >
+                                Register
+                            </Link>
+                            <Link
+                                paddingInline={4}
+                                paddingBlock={1}
+                                rounded={25}
+                                bg={'teal.400'}
+                                mr={4}
+                                color={'white'}
+                                fontWeight={600}
+                                fontSize={'md'}
+                                _hover={{
+                                    textDecoration: "none",
+                                    bg: "teal.500"
+                                }}
+                                as={DomLink}
+                                onClick={() => signOutUser()}
+                            >
+                                SignOut
+                            </Link>
+                        </>
                     </Flex>
                 </Flex>
 

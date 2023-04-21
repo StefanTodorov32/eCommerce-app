@@ -16,9 +16,9 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <>
-      <Navbar />
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
+          <Navbar />
           <Outlet />
         </AuthProvider>
       </QueryClientProvider>
