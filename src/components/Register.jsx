@@ -9,8 +9,12 @@ import {
     Input,
     VStack
 } from "@chakra-ui/react";
-import { authApi } from "../services/firebaseService";
+import { useContext } from "react";
+import { AuthContext } from "../store/AuthProvider";
+import { useNavigate } from "react-router-dom";
 export const Register = () => {
+    const { createUser } = useContext(AuthContext)
+    const navigate = useNavigate()
     return (
         <Flex bg="gray.100" align="center" justify="center" h="100vh">
             <Box bg="white" p={6} rounded="md" w={64}>
@@ -20,8 +24,8 @@ export const Register = () => {
                         password: "",
                     }}
                     onSubmit={async (values) => {
-                        const data = await authApi.register(values)
-                        console.log(data)
+                        await createUser(values)
+                        return navigate("/")
                     }}
                 >
                     {({ handleSubmit, errors, touched }) => {
