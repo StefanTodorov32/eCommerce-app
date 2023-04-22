@@ -10,20 +10,22 @@ import {
     MenuButton,
     MenuList,
     MenuItem,
-    MenuDivider,
     useDisclosure,
     useColorModeValue,
     Stack,
+    Heading,
 } from '@chakra-ui/react';
 import { Link as DomLink } from 'react-router-dom';
 import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons';
 import { useContext } from 'react';
 import { AuthContext } from '../store/AuthProvider';
+import { Profile } from './Profile';
 
-const Links = ['Dashboard', 'Projects', 'Team'];
+const Links = ['Products', 'Contact', 'About Us'];
 
 const NavLink = ({ children }) => (
     <Link
+        as={DomLink}
         px={2}
         py={1}
         rounded={'md'}
@@ -31,7 +33,8 @@ const NavLink = ({ children }) => (
             textDecoration: 'none',
             bg: useColorModeValue('gray.200', 'gray.700'),
         }}
-        href={`/${children.toLowerCase()}`}>
+        to={`/${children.toLowerCase()}`}
+    >
         {children}
     </Link>
 )
@@ -39,7 +42,8 @@ const NavLink = ({ children }) => (
 
 export default function withAction() {
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const { signOutUser, isAuthenticated } = useContext(AuthContext)
+    const { signOutUser, isAuthenticated, user } = useContext(AuthContext)
+    const { isOpen: isOpenModal, onOpen: onOpenModal, onClose: onCloseModal } = useDisclosure()
     return (
         <>
             <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
@@ -52,7 +56,9 @@ export default function withAction() {
                         onClick={isOpen ? onClose : onOpen}
                     />
                     <HStack spacing={8} alignItems={'center'}>
-                        <Box>Logo</Box>
+                        <Box>
+                            <Heading fontSize={20}>eCommerce</Heading>
+                        </Box>
                         <HStack
                             as={'nav'}
                             spacing={4}
@@ -74,12 +80,17 @@ export default function withAction() {
                                     <Avatar
                                         size={'sm'}
                                         src={
-                                            'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
+                                            user.photoURL
                                         }
                                     />
                                 </MenuButton>
                                 <MenuList>
-                                    <MenuItem>Account Details</MenuItem>
+                                    <MenuItem
+                                        onClick={onOpenModal}
+                                        user={user}
+                                    >
+                                        Account Details
+                                    </MenuItem>
                                     <MenuItem
                                         onClick={() => signOutUser()}
                                     >Sign Out
@@ -139,6 +150,7 @@ export default function withAction() {
                         </Stack>
                     </Box>
                 ) : null}
+                <Profile onCloseModal={onCloseModal} isOpenModal={isOpenModal} />
             </Box>
         </>
     );

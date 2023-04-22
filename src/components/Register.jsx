@@ -22,6 +22,9 @@ export const Register = () => {
                     initialValues={{
                         email: "",
                         password: "",
+                        firstName: "",
+                        secondName: "",
+                        photoUrl: ""
                     }}
                     onSubmit={async (values) => {
                         await createUser(values)
@@ -49,8 +52,42 @@ export const Register = () => {
                                                 }
                                                 return error;
                                             }}
+
                                         />
                                         <FormErrorMessage>{errors.email}</FormErrorMessage>
+                                    </FormControl>
+                                    <FormControl>
+                                        <FormLabel htmlFor="firstName">First Name</FormLabel>
+                                        <Field
+                                            id="firstName"
+                                            as={Input}
+                                            name="firstName"
+                                            size="md"
+                                            type="input"
+                                            variant="filled"
+                                        />
+                                    </FormControl>
+                                    <FormControl>
+                                        <FormLabel htmlFor="secondName">Second Name</FormLabel>
+                                        <Field
+                                            id="secondName"
+                                            as={Input}
+                                            name="secondName"
+                                            size="md"
+                                            type="input"
+                                            variant="filled"
+                                        />
+                                    </FormControl>
+                                    <FormControl>
+                                        <FormLabel htmlFor="photoUrl">Profile Picture</FormLabel>
+                                        <Field
+                                            id="photoUrl"
+                                            as={Input}
+                                            name="photoUrl"
+                                            size="md"
+                                            type="input"
+                                            variant="filled"
+                                        />
                                     </FormControl>
                                     <FormControl isInvalid={!!errors.password && touched.password}>
                                         <FormLabel htmlFor="password">Password</FormLabel>

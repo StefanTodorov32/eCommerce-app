@@ -5,8 +5,8 @@ export const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null)
-    const createUser = async ({ email, password }) => {
-        return await authApi.register({ email, password })
+    const createUser = async (values) => {
+        return await authApi.register(values)
     }
     const loginUser = async ({ email, password }) => {
         return await authApi.login({ email, password })
@@ -15,14 +15,13 @@ export const AuthProvider = ({ children }) => {
         return await authApi.googleSignIn()
     }
     const signOutUser = async () => {
-        await authApi.signOut()
+        return await authApi.signOut()
     }
     useEffect(() => {
         return () => {
             return authApi.unsubscribe({ setUser })
         }
     }, [])
-    console.log(user)
     return (
         <AuthContext.Provider value={{
             createUser,

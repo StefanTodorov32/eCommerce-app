@@ -6,12 +6,16 @@ import {
     signOut,
     signInWithPopup,
     signInWithRedirect,
-    GoogleAuthProvider
+    GoogleAuthProvider,
+    updateProfile
 } from "firebase/auth"
 export const authApi = {
-    register: async ({ email, password }) => {
-        const res = await createUserWithEmailAndPassword(auth, email, password)
-        return res
+    register: async ({ email, password, firstName, secondName, photoUrl }) => {
+        await createUserWithEmailAndPassword(auth, email, password)
+        await updateProfile(auth.currentUser, {
+            displayName: `${firstName} ${secondName}`,
+            photoURL: photoUrl
+        })
     },
     login: async ({ email, password }) => {
         const res = await signInWithEmailAndPassword(auth, email, password)
