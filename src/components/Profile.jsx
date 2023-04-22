@@ -4,10 +4,10 @@ import React from 'react'
 
 export const Profile = ({ isOpenModal, onCloseModal }) => {
     return (
-        <Modal blockScrollOnMount={false} isOpen={isOpenModal} onClose={onCloseModal}>
+        <Modal blockScrollOnMount={false} isOpen={isOpenModal} onClose={onCloseModal} size="xl">
             <ModalOverlay />
             <ModalContent>
-                <ModalHeader>Modal Title</ModalHeader>
+                <ModalHeader>Settings</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
                 </ModalBody>
