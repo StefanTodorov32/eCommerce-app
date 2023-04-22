@@ -1,5 +1,13 @@
 import { auth } from "../configurations/firebase"
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth"
+import {
+    createUserWithEmailAndPassword,
+    onAuthStateChanged,
+    signInWithEmailAndPassword,
+    signOut,
+    signInWithPopup,
+    signInWithRedirect,
+    GoogleAuthProvider
+} from "firebase/auth"
 export const authApi = {
     register: async ({ email, password }) => {
         const res = await createUserWithEmailAndPassword(auth, email, password)
@@ -14,5 +22,9 @@ export const authApi = {
             setUser(currentUser)
         })
     },
-    signOut: () => signOut(auth)
+    signOut: () => signOut(auth),
+    googleSignIn: async () => {
+        const provider = new GoogleAuthProvider()
+        return await signInWithPopup(auth, provider)
+    }
 }

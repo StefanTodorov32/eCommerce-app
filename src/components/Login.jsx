@@ -10,7 +10,11 @@ import {
   VStack
 } from "@chakra-ui/react";
 import { authApi } from "../services/firebaseService";
+import GoogleButton from "./buttons/GoogleSignInButton";
+import { useContext } from "react";
+import { AuthContext } from "../store/AuthProvider";
 export const Login = () => {
+  const { signInWithGoogle } = useContext(AuthContext)
   return (
     <Flex bg="gray.100" align="center" justify="center" h="100vh">
       <Box bg="white" p={6} rounded="md" w={64}>
@@ -20,14 +24,13 @@ export const Login = () => {
             password: "",
           }}
           onSubmit={async (values) => {
-            console.log(values)
-            // await authApi.register(values)
+            await authApi.login(values)
           }}
         >
           {({ handleSubmit, errors, touched }) => {
             return (
               <form onSubmit={handleSubmit}>
-                <VStack spacing={4} align="flex-start">
+                <VStack spacing={4} align="center">
                   <FormControl isInvalid={!!errors.email && touched.email}>
                     <FormLabel htmlFor="email">Email Address</FormLabel>
                     <Field
@@ -68,9 +71,12 @@ export const Login = () => {
                     />
                     <FormErrorMessage>{errors.password}</FormErrorMessage>
                   </FormControl>
-                  <Button type="submit" colorScheme="purple" width="full">
-                    Register
-                  </Button>
+                  <Flex flexDirection={`column`} gap={2}>
+                    <GoogleButton signInWithGoogle={signInWithGoogle} />
+                    <Button type="submit" colorScheme="purple" width="full">
+                      Register
+                    </Button>
+                  </Flex>
                 </VStack>
               </form>
             )
