@@ -10,6 +10,7 @@ import {
 } from '@tanstack/react-query'
 import { AuthProvider } from './store/AuthProvider'
 import { Products } from './components/Products'
+import { ProductsProvider } from './store/ProductsProvider'
 
 const queryClient = new QueryClient()
 
@@ -19,8 +20,10 @@ const router = createBrowserRouter([
     element: <>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <Navbar />
-          <Outlet />
+          <ProductsProvider>
+            <Navbar />
+            <Outlet />
+          </ProductsProvider>
         </AuthProvider>
       </QueryClientProvider>
     </>,
@@ -32,7 +35,8 @@ const router = createBrowserRouter([
       {
         path: "register",
         element: <Register />
-      }, {
+      },
+      {
         path: "",
         element: <Products />
       }

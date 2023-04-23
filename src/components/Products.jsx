@@ -1,11 +1,13 @@
 import { Box, SimpleGrid } from '@chakra-ui/layout'
-import React from 'react'
+import React, { useContext } from 'react'
 import { ProductsCard } from './ProductsCard'
+import { ProductsContext } from '../store/ProductsProvider'
 
 export const Products = () => {
+  const { products } = useContext(ProductsContext)
   return (
     <SimpleGrid columns={3} spacing={10} p={20} w="fit-content" m="auto">
-      {Array.from([1, 2, 3, 4, 5]).map(x => <ProductsCard />)}
+      {products.map((x, i) => <ProductsCard key={i} {...x} />)}
     </SimpleGrid>
   )
 }

@@ -1,20 +1,29 @@
-import { auth } from "../configurations/firebase"
+import { addDoc, collection, getDocs } from "firebase/firestore"
+import { auth, db } from "../configurations/firebase"
 import {
     createUserWithEmailAndPassword,
     onAuthStateChanged,
     signInWithEmailAndPassword,
     signOut,
     signInWithPopup,
-    signInWithRedirect,
     GoogleAuthProvider,
-    updateProfile
+    updateProfile,
 } from "firebase/auth"
+
+
+const productColletionRef = collection(db, 'products')
+const usersColletionRef = collection(db, 'users')
+
+
 export const authApi = {
     register: async ({ email, password, firstName, secondName, photoUrl }) => {
         await createUserWithEmailAndPassword(auth, email, password)
         await updateProfile(auth.currentUser, {
             displayName: `${firstName} ${secondName}`,
             photoURL: photoUrl
+        })
+        await addDoc(usersColletionRef, {
+            email, firstName, secondName, photoUrl
         })
     },
     login: async ({ email, password }) => {
@@ -30,5 +39,15 @@ export const authApi = {
     googleSignIn: async () => {
         const provider = new GoogleAuthProvider()
         return await signInWithPopup(auth, provider)
+    }
+}
+
+export const firestoreService = {
+    getProducts: async () => {
+        const res = await getDocs(productColletionRef)
+        return res.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }))
     }
 }
