@@ -13,6 +13,7 @@ import { Products } from './components/Products'
 import { ProductsProvider } from './store/ProductsProvider'
 import { CreateProduct } from './components/CreateProduct'
 import { ProductDetails } from './components/ProductDetails'
+import Home from './components/Home'
 
 const queryClient = new QueryClient()
 
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
     </>,
     children: [
       {
+        path: "",
+        element: <Home />
+      },
+      {
         path: "login",
         element: <Login />
       },
@@ -39,7 +44,7 @@ const router = createBrowserRouter([
         element: <Register />
       },
       {
-        path: "",
+        path: "products",
         element: <Products />
       },
       {

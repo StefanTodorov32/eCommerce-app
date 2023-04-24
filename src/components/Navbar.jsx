@@ -57,7 +57,12 @@ export default function withAction() {
                     />
                     <HStack spacing={8} alignItems={'center'}>
                         <Box>
-                            <Heading fontSize={20}>eCommerce</Heading>
+                            <Link
+                            as={DomLink}
+                            to="/"
+                            >
+                                <Heading fontSize={20}>eCommerce</Heading>
+                            </Link>
                         </Box>
                         <HStack
                             as={'nav'}
