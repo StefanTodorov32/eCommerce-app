@@ -21,7 +21,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../store/AuthProvider';
 import { Profile } from './Profile';
 
-const Links = ['Products', 'Contact', 'About Us'];
+const Links = ['Products', 'Contact', 'About Us', 'Create'];
 
 const NavLink = ({ children }) => (
     <Link

@@ -11,6 +11,8 @@ import {
 import { AuthProvider } from './store/AuthProvider'
 import { Products } from './components/Products'
 import { ProductsProvider } from './store/ProductsProvider'
+import { CreateProduct } from './components/CreateProduct'
+import { ProductDetails } from './components/ProductDetails'
 
 const queryClient = new QueryClient()
 
@@ -39,6 +41,14 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <Products />
+      },
+      {
+        path: "create",
+        element: <CreateProduct />
+      },
+      {
+        path: "product/:id",
+        element: <ProductDetails />
       }
     ]
 

@@ -49,5 +49,13 @@ export const firestoreService = {
             id: doc.id,
             ...doc.data()
         }))
-    }
+    },
+    getProductById: async (id) => {
+        const res = await getDocs(productColletionRef)
+        return res.docs.map(doc => doc.id === id ? {
+            ...doc.data(),
+            id: doc.id
+        } : null)[0]
+    },
+
 }

@@ -15,9 +15,14 @@ export const ProductsProvider = ({ children }) => {
         }
         getProducts()
     }, [])
+    const getProduct = async (id) => {
+        const product = await firestoreService.getProductById(id);
+        return product;
+    }
     return (
         <ProductsContext.Provider value={{
-            products
+            products,
+            getProduct
         }}>
             {children}
         </ProductsContext.Provider>
