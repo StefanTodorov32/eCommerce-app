@@ -1,4 +1,4 @@
-import { Center, Container, Flex, Heading, Spinner, Box, Image, Text, Grid } from '@chakra-ui/react'
+import { Center, Container, Flex, Heading, Spinner, Box, Image, Text, Grid, Button } from '@chakra-ui/react'
 import React, { useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import { ProductsContext } from '../store/ProductsProvider'
@@ -11,7 +11,6 @@ export const ProductDetails = () => {
     queryKey: ['product'],
     queryFn: () => getProduct(id),
   })
-  console.log("🚀 ~ file: ProductDetails.jsx:14 ~ ProductDetails ~ data:", data)
   return (
     <>
       {isLoading &&
@@ -40,9 +39,12 @@ export const ProductDetails = () => {
               </Grid>
             </Box>
             <Box d="flex" justifyContent="space-between" mb="4">
-              <Heading as="h1" size="lg" mb="0">
-                {data?.productName}
-              </Heading>
+              <Flex>
+                <Heading as="h1" size="lg" mb="0">
+                  {data?.productName}
+                </Heading>
+                <Button colorScheme="teal" ml={5} size="lg">Buy Now</Button>
+              </Flex>
               <Text fontSize="xl">${data?.price}</Text>
             </Box>
             <Text fontSize="md" color="gray.500" mb="4">
