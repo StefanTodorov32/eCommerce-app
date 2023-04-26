@@ -2,16 +2,21 @@ import { Button, ButtonGroup } from '@chakra-ui/button'
 import { Card, CardBody, CardFooter } from '@chakra-ui/card'
 import { Image } from '@chakra-ui/image'
 import { Divider, Heading, Stack, Text } from '@chakra-ui/layout'
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 export const ProductsCard = ({ productImages, productName, productDescription, price, id }) => {
     const navigation = useNavigate()
+    const [mainImage, setMainImage] = useState(productImages[0])
     return (
         <Card maxW='sm'>
-            <CardBody>
+            <CardBody
+                onClick={() => navigation(`/product/${id}`)}
+                onMouseOver={() => setMainImage(productImages[1])}
+                onMouseLeave={() => setMainImage(productImages[0])}
+            >
                 <Image
-                    src={`${productImages[0]}`}
+                    src={mainImage}
                     alt={productName}
                     borderRadius='lg'
                 />
@@ -25,19 +30,6 @@ export const ProductsCard = ({ productImages, productName, productDescription, p
                     </Text>
                 </Stack>
             </CardBody>
-            <Divider />
-            <CardFooter>
-                <ButtonGroup spacing='2'>
-                    <Button variant='solid' colorScheme='blue'
-                        onClick={() => navigation(`/product/${id}`)}
-                    >
-                        Buy now
-                    </Button>
-                    <Button variant='ghost' colorScheme='blue'>
-                        Add to cart
-                    </Button>
-                </ButtonGroup>
-            </CardFooter>
         </Card>
     )
 }

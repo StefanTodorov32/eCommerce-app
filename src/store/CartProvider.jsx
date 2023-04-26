@@ -3,6 +3,7 @@ import { createContext, useEffect, useState } from "react";
 export const CartContext = createContext()
 
 export const CartProvider = ({ children }) => {
+    const [total, setTotal] = useState(0)
     const [items, setItems] = useState(() => {
         const storedCartItems = localStorage.getItem("cartItems");
         return storedCartItems ? JSON.parse(storedCartItems) : [];
@@ -24,6 +25,7 @@ export const CartProvider = ({ children }) => {
 
 
     const handleAddItem = (item) => {
+        item.quantity = 1
         const itemIndex = items.findIndex((i) => i.id === item.id);
         if (itemIndex === -1) {
             setItems([...items, item]);
@@ -46,6 +48,12 @@ export const CartProvider = ({ children }) => {
     const handleClearCart = () => {
         setItems([]);
     };
+    useEffect(() => {
+        const sum = items.reduce((acc, item) => {
+            return acc + item.quantity * item.price;
+        }, 0);
+        setTotal(sum)
+    }, [items])
     return (
         <CartContext.Provider
             value={{
@@ -53,6 +61,7 @@ export const CartProvider = ({ children }) => {
                 handleAddItem,
                 handleRemoveItem,
                 handleClearCart,
+                total
             }}
         >
             {children}
