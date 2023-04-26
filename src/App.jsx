@@ -14,6 +14,8 @@ import { ProductsProvider } from './store/ProductsProvider'
 import { CreateProduct } from './components/CreateProduct'
 import { ProductDetails } from './components/ProductDetails'
 import Home from './components/Home'
+import ShoppingCart from './components/ShoppingCart'
+import { CartProvider } from './store/CartProvider'
 
 const queryClient = new QueryClient()
 
@@ -24,8 +26,10 @@ const router = createBrowserRouter([
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <ProductsProvider>
-            <Navbar />
-            <Outlet />
+            <CartProvider>
+              <Navbar />
+              <Outlet />
+            </CartProvider>
           </ProductsProvider>
         </AuthProvider>
       </QueryClientProvider>
@@ -54,6 +58,10 @@ const router = createBrowserRouter([
       {
         path: "product/:id",
         element: <ProductDetails />
+      },
+      {
+        path: "shopping-cart",
+        element: <ShoppingCart />
       }
     ]
 

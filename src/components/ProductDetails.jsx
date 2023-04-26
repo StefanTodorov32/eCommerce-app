@@ -1,11 +1,13 @@
-import { Center, Container, Flex, Heading, Spinner, Box, Image, Text, Grid, Button } from '@chakra-ui/react'
+import { Flex, Heading, Spinner, Box, Image, Text, Grid, Button } from '@chakra-ui/react'
 import React, { useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import { ProductsContext } from '../store/ProductsProvider'
 import { useQuery } from '@tanstack/react-query'
+import { CartContext } from '../store/CartProvider'
 
 export const ProductDetails = () => {
   const { getProduct } = useContext(ProductsContext)
+  const { handleAddItem } = useContext(CartContext)
   const { id } = useParams()
   const { data, isLoading } = useQuery({
     queryKey: ['product'],
@@ -43,7 +45,8 @@ export const ProductDetails = () => {
                 <Heading as="h1" size="lg" mb="0">
                   {data?.productName}
                 </Heading>
-                <Button colorScheme="teal" ml={5} size="lg">Buy Now</Button>
+                <Button colorScheme="red" ml={5} size="lg">Buy Now</Button>
+                <Button colorScheme="yellow" ml={5} size="lg" onClick={() => handleAddItem(data)}>Add to Cart</Button>
               </Flex>
               <Text fontSize="xl">${data?.price}</Text>
             </Box>

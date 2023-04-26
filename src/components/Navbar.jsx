@@ -17,9 +17,13 @@ import {
 } from '@chakra-ui/react';
 import { Link as DomLink } from 'react-router-dom';
 import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AuthContext } from '../store/AuthProvider';
 import { Profile } from './Profile';
+import { AiOutlineShoppingCart } from "react-icons/ai"
+import { CgDetailsMore } from "react-icons/cg"
+import { FaSignOutAlt } from "react-icons/fa"
+import ShoppingCart from './ShoppingCart';
 
 const Links = ['Products', 'Contact', 'About Us', 'Create'];
 
@@ -37,13 +41,13 @@ const NavLink = ({ children }) => (
     >
         {children}
     </Link>
-)
-    ;
+);
 
 export default function withAction() {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { signOutUser, isAuthenticated, user } = useContext(AuthContext)
     const { isOpen: isOpenModal, onOpen: onOpenModal, onClose: onCloseModal } = useDisclosure()
+    const [isOpenCart, setIsOpenCart] = useState(false)
     return (
         <>
             <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
@@ -58,8 +62,8 @@ export default function withAction() {
                     <HStack spacing={8} alignItems={'center'}>
                         <Box>
                             <Link
-                            as={DomLink}
-                            to="/"
+                                as={DomLink}
+                                to="/"
                             >
                                 <Heading fontSize={20}>eCommerce</Heading>
                             </Link>
@@ -94,11 +98,26 @@ export default function withAction() {
                                         onClick={onOpenModal}
                                         user={user}
                                     >
-                                        Account Details
+                                        <CgDetailsMore height="50px" />
+                                        <div style={{ marginLeft: "4px" }}>
+                                            Account Details
+                                        </div>
+                                    </MenuItem>
+                                    <MenuItem
+                                        onClick={() => setIsOpenCart(true)}
+                                    >
+                                        <AiOutlineShoppingCart height="50px" />
+                                        <div style={{ marginLeft: "4px" }}>
+                                            Shopping Cart
+                                        </div>
                                     </MenuItem>
                                     <MenuItem
                                         onClick={() => signOutUser()}
-                                    >Sign Out
+                                    >
+                                        <FaSignOutAlt height="50px" />
+                                        <div style={{ marginLeft: "4px" }}>
+                                            Sign Out
+                                        </div>
                                     </MenuItem>
                                 </MenuList>
                             </Menu>
@@ -143,6 +162,8 @@ export default function withAction() {
                                 </Link>
                             </>
                         }
+
+                        <Profile onCloseModal={onCloseModal} isOpenModal={isOpenModal} />
                     </Flex>
                 </Flex>
 
@@ -155,8 +176,9 @@ export default function withAction() {
                         </Stack>
                     </Box>
                 ) : null}
-                <Profile onCloseModal={onCloseModal} isOpenModal={isOpenModal} />
-            </Box>
+
+            </Box >
+            <ShoppingCart isOpenCart={isOpenCart} setIsOpenCart={setIsOpenCart} />
         </>
     );
 }

@@ -54,9 +54,10 @@ export const firestoreService = {
         const res = await getDocs(productColletionRef)
         const filtered =  res.docs.filter(doc => doc.id === id ? {
             ...doc.data(),
-            id: doc.id
-        } : null)[0]
-        return filtered.data()
+            id
+        } : null)
+        console.log(filtered)
+        return filtered
     },
 
 }
