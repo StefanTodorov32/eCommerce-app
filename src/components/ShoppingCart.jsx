@@ -31,12 +31,9 @@ const CartItem = ({ item, handleRemove }) => {
 
 const ShoppingCart = ({ handleRemove, isOpenCart, setIsOpenCart }) => {
     const { items } = useContext(CartContext)
-    console.log(items)
     const bg = useColorModeValue("white", "gray.800");
     const color = useColorModeValue("gray.800", "white");
-    const total = items.reduce((acc, item) => {
-        return acc + item.price * item.quantity;
-    }, 0);
+    const total = items.reduce((sum, item) => sum + item.price, 0);
 
     return (
         <>

@@ -1,4 +1,4 @@
-import { addDoc, collection, getDocs } from "firebase/firestore"
+import { addDoc, collection, getDocs, doc, getDoc } from "firebase/firestore"
 import { auth, db } from "../configurations/firebase"
 import {
     createUserWithEmailAndPassword,
@@ -51,13 +51,9 @@ export const firestoreService = {
         }))
     },
     getProductById: async (id) => {
-        const res = await getDocs(productColletionRef)
-        const filtered =  res.docs.filter(doc => doc.id === id ? {
-            ...doc.data(),
-            id
-        } : null)
-        console.log(filtered)
-        return filtered
+        const docRef = doc(db, "products", id)
+        const docSnap = await getDoc(docRef)
+        return {...docSnap.data(), id}
     },
 
 }

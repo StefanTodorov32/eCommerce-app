@@ -1,9 +1,28 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 export const CartContext = createContext()
 
 export const CartProvider = ({ children }) => {
-    const [items, setItems] = useState([]);
+    const [items, setItems] = useState(() => {
+        const storedCartItems = localStorage.getItem("cartItems");
+        return storedCartItems ? JSON.parse(storedCartItems) : [];
+    });
+
+    useEffect(() => {
+        localStorage.setItem("cartItems", JSON.stringify(items));
+    }, [items]);
+
+    useEffect(() => {
+        const handleBeforeUnload = () => {
+            localStorage.setItem("cartItems", JSON.stringify(items));
+        };
+        window.addEventListener("beforeunload", handleBeforeUnload);
+        return () => {
+            window.removeEventListener("beforeunload", handleBeforeUnload);
+        };
+    }, [items]);
+
+
     const handleAddItem = (item) => {
         const itemIndex = items.findIndex((i) => i.id === item.id);
         if (itemIndex === -1) {
@@ -27,11 +46,6 @@ export const CartProvider = ({ children }) => {
     const handleClearCart = () => {
         setItems([]);
     };
-
-    const total = items.reduce((acc, item) => {
-        return acc + item.price * item.quantity;
-    }, 0);
-
     return (
         <CartContext.Provider
             value={{
@@ -39,7 +53,6 @@ export const CartProvider = ({ children }) => {
                 handleAddItem,
                 handleRemoveItem,
                 handleClearCart,
-                total,
             }}
         >
             {children}
