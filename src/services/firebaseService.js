@@ -39,7 +39,12 @@ export const authApi = {
     googleSignIn: async () => {
         const provider = new GoogleAuthProvider()
         return await signInWithPopup(auth, provider)
-    }
+    },
+    updateUserProfile: ({ firstName, secondName, photoURL }) => updateProfile(auth.currentUser, {
+        displayName: `${firstName} ${secondName}`, 
+        photoURL
+    })
+
 }
 
 export const firestoreService = {
@@ -53,7 +58,7 @@ export const firestoreService = {
     getProductById: async (id) => {
         const docRef = doc(db, "products", id)
         const docSnap = await getDoc(docRef)
-        return {...docSnap.data(), id}
+        return { ...docSnap.data(), id }
     },
 
 }
