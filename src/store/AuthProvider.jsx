@@ -1,13 +1,14 @@
 import { createContext, useEffect, useState } from "react";
 import { authApi } from "../services/firebaseService";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "@chakra-ui/react";
 
 export const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
     const navigate = useNavigate()
     const [errorMessages, setErrorMessages] = useState(null)
-    console.log(errorMessages)
+    const toast = useToast()
     const [user, setUser] = useState(null)
 
     const handleCreateUser = async (values) => {
@@ -15,7 +16,15 @@ export const AuthProvider = ({ children }) => {
             await authApi.register(values)
         } catch (err) {
             err.message == "Firebase: Error (auth/email-already-in-use)." ? setErrorMessages("Email already in use!") : null
+            toast({
+                title: 'Error',
+                description: errorMessages,
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+            })
         }
+        await authApi.addUserToUsersCol(values)
     }
 
     const loginUser = ({ email, password }) => authApi.login({ email, password })
