@@ -6,14 +6,19 @@ export const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
     const navigate = useNavigate()
-
+    const [errorMessages, setErrorMessages] = useState(null)
+    console.log(errorMessages)
     const [user, setUser] = useState(null)
-    const createUser = async (values) => {
-        return await authApi.register(values)
+
+    const handleCreateUser = async (values) => {
+        try {
+            await authApi.register(values)
+        } catch (err) {
+            err.message == "Firebase: Error (auth/email-already-in-use)." ? setErrorMessages("Email already in use!") : null
+        }
     }
-    const loginUser = async ({ email, password }) => {
-        return await authApi.login({ email, password })
-    }
+
+    const loginUser = ({ email, password }) => authApi.login({ email, password })
     const signInWithGoogle = async () => {
         return await authApi.googleSignIn()
     }
@@ -32,7 +37,7 @@ export const AuthProvider = ({ children }) => {
     }, [])
     return (
         <AuthContext.Provider value={{
-            createUser,
+            handleCreateUser,
             loginUser,
             user,
             signOutUser,

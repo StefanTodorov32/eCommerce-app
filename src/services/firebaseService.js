@@ -16,20 +16,8 @@ const usersColletionRef = collection(db, 'users')
 
 
 export const authApi = {
-    register: async ({ email, password, firstName, secondName, photoUrl }) => {
-        await createUserWithEmailAndPassword(auth, email, password)
-        await updateProfile(auth.currentUser, {
-            displayName: `${firstName} ${secondName}`,
-            photoURL: photoUrl
-        })
-        await addDoc(usersColletionRef, {
-            email, firstName, secondName, photoUrl
-        })
-    },
-    login: async ({ email, password }) => {
-        const res = await signInWithEmailAndPassword(auth, email, password)
-        return res
-    },
+    register: ({ email, password }) => createUserWithEmailAndPassword(auth, email, password),
+    login: async ({ email, password }) => signInWithEmailAndPassword(auth, email, password),
     unsubscribe: ({ setUser }) => {
         return onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser)
@@ -41,7 +29,7 @@ export const authApi = {
         return await signInWithPopup(auth, provider)
     },
     updateUserProfile: ({ firstName, secondName, photoURL }) => updateProfile(auth.currentUser, {
-        displayName: `${firstName} ${secondName}`, 
+        displayName: `${firstName} ${secondName}`,
         photoURL
     })
 

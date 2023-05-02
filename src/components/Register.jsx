@@ -9,11 +9,15 @@ import {
     Input,
     VStack
 } from "@chakra-ui/react";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../store/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import { useMutation, useQuery } from "@tanstack/react-query";
 export const Register = () => {
-    const { createUser } = useContext(AuthContext)
+    const { handleCreateUser } = useContext(AuthContext)
+    const { data, mutate, error } = useMutation({
+        mutationFn: async (values) => await handleCreateUser(values)
+    })
     const navigate = useNavigate()
     return (
         <Flex bg="gray.100" align="center" justify="center" h="100vh">
@@ -26,9 +30,8 @@ export const Register = () => {
                         secondName: "",
                         photoUrl: ""
                     }}
-                    onSubmit={async (values) => {
-                        await createUser(values)
-                        return navigate("/")
+                    onSubmit={(values) => {
+                        mutate(values)
                     }}
                 >
                     {({ handleSubmit, errors, touched }) => {
