@@ -28,7 +28,7 @@ export const Register = () => {
                         password: "",
                         firstName: "",
                         secondName: "",
-                        photoUrl: ""
+                        photoURL: ""
                     }}
                     onSubmit={(values) => {
                         mutate(values)
@@ -82,11 +82,11 @@ export const Register = () => {
                                         />
                                     </FormControl>
                                     <FormControl>
-                                        <FormLabel htmlFor="photoUrl">Profile Picture</FormLabel>
+                                        <FormLabel htmlFor="photoURL">Profile Picture</FormLabel>
                                         <Field
-                                            id="photoUrl"
+                                            id="photoURL"
                                             as={Input}
-                                            name="photoUrl"
+                                            name="photoURL"
                                             size="md"
                                             type="input"
                                             variant="filled"
