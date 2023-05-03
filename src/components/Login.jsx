@@ -9,12 +9,10 @@ import {
   Input,
   VStack
 } from "@chakra-ui/react";
-import { authApi } from "../services/firebaseService";
-import GoogleButton from "./buttons/GoogleSignInButton";
 import { useContext } from "react";
 import { AuthContext } from "../store/AuthProvider";
 export const Login = () => {
-  const { signInWithGoogle } = useContext(AuthContext)
+  const { handleLoginUser } = useContext(AuthContext)
   return (
     <Flex bg="gray.100" align="center" justify="center" h="100vh">
       <Box bg="white" p={6} rounded="md" w={64}>
@@ -23,9 +21,7 @@ export const Login = () => {
             email: "",
             password: "",
           }}
-          onSubmit={async (values) => {
-            await authApi.login(values)
-          }}
+          onSubmit={handleLoginUser}
         >
           {({ handleSubmit, errors, touched }) => {
             return (
@@ -72,7 +68,6 @@ export const Login = () => {
                     <FormErrorMessage>{errors.password}</FormErrorMessage>
                   </FormControl>
                   <Flex flexDirection={`column`} gap={2}>
-                    <GoogleButton signInWithGoogle={signInWithGoogle} />
                     <Button type="submit" colorScheme="purple" width="full">
                       Register
                     </Button>

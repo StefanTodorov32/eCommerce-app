@@ -9,21 +9,6 @@ export const CartProvider = ({ children }) => {
         return storedCartItems ? JSON.parse(storedCartItems) : [];
     });
 
-    useEffect(() => {
-        localStorage.setItem("cartItems", JSON.stringify(items));
-    }, [items]);
-
-    useEffect(() => {
-        const handleBeforeUnload = () => {
-            localStorage.setItem("cartItems", JSON.stringify(items));
-        };
-        window.addEventListener("beforeunload", handleBeforeUnload);
-        return () => {
-            window.removeEventListener("beforeunload", handleBeforeUnload);
-        };
-    }, [items]);
-
-
     const handleAddItem = (item) => {
         item.quantity = 1
         const itemIndex = items.findIndex((i) => i.id === item.id);

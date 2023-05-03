@@ -10,10 +10,11 @@ export const AuthProvider = ({ children }) => {
     const navigate = useNavigate()
     const toast = useToast()
     const [user, setUser] = useState(null)
-
+    console.log(user)
     const handleCreateUser = async (values) => {
         try {
             await authApi.register(values)
+            showToastNotification(toast, "Success", "Account successfully created!", "success", 4000, true)
         } catch (err) {
             showToastNotification(toast, "Error", err.message, "error", 4000, true)
         }
@@ -21,9 +22,13 @@ export const AuthProvider = ({ children }) => {
         await authApi.addUserToUsersCol(values)
     }
 
-    const loginUser = ({ email, password }) => authApi.login({ email, password })
-    const signInWithGoogle = async () => {
-        return await authApi.googleSignIn()
+    const handleLoginUser = async({ email, password }) => {
+        try {
+            await authApi.login({ email, password })
+            showToastNotification(toast, "Success", "Account successfully logged!", "success", 4000, true)
+        } catch (err) {
+            showToastNotification(toast, "Error", err.message, "error", 4000, true)
+        }
     }
     const signOutUser = async () => {
         return await authApi.signOut()
@@ -41,10 +46,9 @@ export const AuthProvider = ({ children }) => {
     return (
         <AuthContext.Provider value={{
             handleCreateUser,
-            loginUser,
+            handleLoginUser,
             user,
             signOutUser,
-            signInWithGoogle,
             isAuthenticated: !!user,
             handleProfileUpdate
         }}>

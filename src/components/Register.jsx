@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 export const Register = () => {
     const { handleCreateUser } = useContext(AuthContext)
-    const { data, mutate, error } = useMutation({
+    const { mutate } = useMutation({
         mutationFn: async (values) => await handleCreateUser(values)
     })
     const navigate = useNavigate()
