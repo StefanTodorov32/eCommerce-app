@@ -16,7 +16,7 @@ const CartItem = ({ item, handleRemoveItem }) => {
         <Flex p={2} borderBottom="1px" borderColor="gray.200">
             <Box flex={1}>
                 <Text fontWeight="semibold">{item.productName}</Text>
-                <Text fontSize="md" color="black">
+                <Text fontSize="md" color="white">
                     {item.quantity} x {item.price}$
                 </Text>
                 <Image src={item.productImages[0]} alt={item.productName} mb="4" borderRadius="20px" />

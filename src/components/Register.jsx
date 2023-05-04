@@ -9,19 +9,19 @@ import {
     Input,
     VStack
 } from "@chakra-ui/react";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../store/AuthProvider";
+import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { useMutation, useQuery } from "@tanstack/react-query";
 export const Register = () => {
     const { handleCreateUser } = useContext(AuthContext)
+    const navigation = useNavigate()
     const { mutate } = useMutation({
         mutationFn: async (values) => await handleCreateUser(values)
     })
-    const navigate = useNavigate()
     return (
-        <Flex bg="gray.100" align="center" justify="center" h="100vh">
-            <Box bg="white" p={6} rounded="md" w={64}>
+        <Flex align="center" justify="center" h="100vh">
+            <Box bg="#2D3748" p={6} rounded="md" w={64}>
                 <Formik
                     initialValues={{
                         email: "",
@@ -32,6 +32,7 @@ export const Register = () => {
                     }}
                     onSubmit={(values) => {
                         mutate(values)
+                        navigation("/")
                     }}
                 >
                     {({ handleSubmit, errors, touched }) => {
@@ -112,7 +113,7 @@ export const Register = () => {
                                         />
                                         <FormErrorMessage>{errors.password}</FormErrorMessage>
                                     </FormControl>
-                                    <Button type="submit" colorScheme="purple" width="full">
+                                    <Button type="submit" colorScheme="blue" width="full">
                                         Register
                                     </Button>
                                 </VStack>

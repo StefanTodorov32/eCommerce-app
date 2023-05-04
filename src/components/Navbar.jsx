@@ -127,7 +127,7 @@ export default function withAction() {
                                     paddingInline={4}
                                     paddingBlock={1}
                                     rounded={25}
-                                    bg={'teal.400'}
+                                    bg={'blue.400'}
                                     mr={4}
                                     color={'white'}
                                     fontWeight={600}
@@ -135,7 +135,7 @@ export default function withAction() {
                                     href='/login'
                                     _hover={{
                                         textDecoration: "none",
-                                        bg: "teal.500"
+                                        bg: "blue.500"
                                     }}
                                     as={DomLink}
                                     to="/login"
@@ -146,14 +146,14 @@ export default function withAction() {
                                     paddingInline={4}
                                     paddingBlock={1}
                                     rounded={25}
-                                    bg={'teal.400'}
+                                    bg={'blue.400'}
                                     mr={4}
                                     color={'white'}
                                     fontWeight={600}
                                     fontSize={'md'}
                                     _hover={{
                                         textDecoration: "none",
-                                        bg: "teal.500"
+                                        bg: "blue.500"
                                     }}
                                     as={DomLink}
                                     to="/register"

@@ -1,16 +1,13 @@
 import { createContext, useEffect, useState } from "react";
 import { authApi } from "../services/firebaseService";
-import { useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
 import { showToastNotification } from "../utils/toast";
-
+import { auth } from "../configurations/firebase";
 export const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
-    const navigate = useNavigate()
     const toast = useToast()
     const [user, setUser] = useState(null)
-    console.log(user)
     const handleCreateUser = async (values) => {
         try {
             await authApi.register(values)
@@ -22,7 +19,7 @@ export const AuthProvider = ({ children }) => {
         await authApi.addUserToUsersCol(values)
     }
 
-    const handleLoginUser = async({ email, password }) => {
+    const handleLoginUser = async ({ email, password }) => {
         try {
             await authApi.login({ email, password })
             showToastNotification(toast, "Success", "Account successfully logged!", "success", 4000, true)
@@ -34,14 +31,16 @@ export const AuthProvider = ({ children }) => {
         return await authApi.signOut()
     }
     const handleProfileUpdate = async (values, actions) => {
-        await authApi.updateUserProfile(values)
-        navigate("/")
+        try {
+            await authApi.updateUserProfile(values)
+            showToastNotification(toast, "Success", "Account successfully updated!", "success", 4000, true)
+        } catch (err) {
+            showToastNotification(toast, "Error", err.message, "error", 4000, true)
+        }
         actions.setSubmitting(false);
     }
     useEffect(() => {
-        return () => {
-            return authApi.unsubscribe({ setUser })
-        }
+        authApi.unsubscribe({ setUser })
     }, [])
     return (
         <AuthContext.Provider value={{

@@ -11,17 +11,28 @@ import {
 } from "@chakra-ui/react";
 import { useContext } from "react";
 import { AuthContext } from "../store/AuthProvider";
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 export const Login = () => {
   const { handleLoginUser } = useContext(AuthContext)
+  const navigation = useNavigate()
+  const { mutate } = useMutation({
+    mutationFn: async (values) => {
+      await handleLoginUser(values)
+    }
+  })
   return (
-    <Flex bg="gray.100" align="center" justify="center" h="100vh">
-      <Box bg="white" p={6} rounded="md" w={64}>
+    <Flex align="center" justify="center" h="100vh">
+      <Box bg="#2D3748" p={6} rounded="md" w={64}>
         <Formik
           initialValues={{
             email: "",
             password: "",
           }}
-          onSubmit={handleLoginUser}
+          onSubmit={(values) => {
+            mutate(values)
+            navigation("/")
+          }}
         >
           {({ handleSubmit, errors, touched }) => {
             return (
@@ -68,8 +79,8 @@ export const Login = () => {
                     <FormErrorMessage>{errors.password}</FormErrorMessage>
                   </FormControl>
                   <Flex flexDirection={`column`} gap={2}>
-                    <Button type="submit" colorScheme="purple" width="full">
-                      Register
+                    <Button type="submit" colorScheme="blue" width="full">
+                      Login
                     </Button>
                   </Flex>
                 </VStack>

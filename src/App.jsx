@@ -16,8 +16,16 @@ import { ProductDetails } from './components/ProductDetails'
 import Home from './components/Home'
 import ShoppingCart from './components/ShoppingCart'
 import { CartProvider } from './store/CartProvider'
+import { extendTheme } from '@chakra-ui/react'
 
 const queryClient = new QueryClient()
+
+const theme = extendTheme({
+  config: {
+    useSystemColorMode: true,
+    initialColorMode: "dark"
+  }
+});
 
 const router = createBrowserRouter([
   {
@@ -27,8 +35,10 @@ const router = createBrowserRouter([
         <AuthProvider>
           <ProductsProvider>
             <CartProvider>
-              <Navbar />
-              <Outlet />
+              <ChakraProvider theme={theme}>
+                <Navbar />
+                <Outlet />
+              </ChakraProvider>
             </CartProvider>
           </ProductsProvider>
         </AuthProvider>
@@ -70,10 +80,6 @@ const router = createBrowserRouter([
 
 export const App = () => {
   return (
-    <>
-      <ChakraProvider>
-        <RouterProvider router={router}></RouterProvider>
-      </ChakraProvider>
-    </>
+    <RouterProvider router={router} />
   )
 }
