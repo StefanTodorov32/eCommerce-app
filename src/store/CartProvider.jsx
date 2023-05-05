@@ -10,16 +10,18 @@ export const CartProvider = ({ children }) => {
     });
 
     const handleAddItem = (item) => {
-        item.quantity = 1
         const itemIndex = items.findIndex((i) => i.id === item.id);
         if (itemIndex === -1) {
-            setItems([...items, item]);
+            // Item is not in the cart, add it with quantity of 1
+            setItems([...items, { ...item, quantity: 1 }]);
         } else {
+            // Item is already in the cart, increase its quantity by 1
             const newItems = [...items];
-            newItems[itemIndex].quantity += item.quantity;
+            newItems[itemIndex].quantity += 1;
             setItems(newItems);
         }
     };
+
 
     const handleRemoveItem = (itemId) => {
         const itemIndex = items.findIndex((item) => item.id === itemId);
